@@ -58,7 +58,7 @@ typings/
 .env
 
 # config files
-config/keys.js
+config/
 
 # playground folder
 playground/
