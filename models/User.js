@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
-const jwt = require('jsonwebtoken');
-
 const Schema = mongoose.Schema;
 
 //create schema
@@ -16,11 +13,6 @@ const UserSchema = new Schema({
 		trim: true,
 		minlength: 1,
 		unique: true,
-		validate: {
-			isAsync: true,
-			validator: validator.isEmail,
-			message: '{VALUE} is not a valid email'
-		}
 	},
 	password: {
 		type: String,
