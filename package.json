@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "serverlocal": "export NODE_ENV=development || SET \"NODE_ENV=development\" && nodemon server.js"
   },
   "author": "ADIL",
   "license": "MIT",
