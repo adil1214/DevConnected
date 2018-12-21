@@ -23,7 +23,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 	const errors = {};
 
 	Profile.findOne({ user: req.user.id })
-		.populate('user', ['name', 'avatar'])
+		.populate('user', [ 'name', 'avatar' ])
 		.then((profile) => {
 			if (!profile) {
 				errors.noprofile = 'There is no profile for this user';
@@ -38,12 +38,13 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
 // @desc    Create & Edit user profile
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const {errors, isValid} = validateProfileInput(req.body);
+	const { errors, isValid } = validateProfileInput(req.body);
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
 
 	const profileFields = {};
+	// #region profileFields setup
 	profileFields.user = req.user.id;
 	if (req.body.handle) profileFields.handle = req.body.handle;
 	if (req.body.company) profileFields.company = req.body.company;
@@ -63,32 +64,83 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 	if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
 	if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
 	if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
+	//#endregion
 
-	Profile.findOne({user: req.user.id}).then((profile) => {
+	Profile.findOne({ user: req.user.id }).then((profile) => {
 		if (profile) {
 			// Update the profile
-			Profile.findOneAndUpdate(
-				{ user: req.user.id }, 
-				{ $set: profileFields }, 
-				{ new: true }
-			).then((profile) => {
+			Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true }).then((profile) => {
+				console.log(`found the user with handle: ${profile.handle} and updated him`); // FIXME:
 				res.json(profile);
-			}).catch(err => res.status(400).json(err));
-		}	else {
+			});
+		} else {
 			// check if handle available
-			Profile.findOne({handle: profileFields.handle}).then((profile) => {
+			Profile.findOne({ handle: profileFields.handle }).then((profile) => {
 				if (profile) {
+					console.log(`handle ${profile.handle} already exists.`); // FIXME:
 					errors.handle = 'Handle already exists';
 					res.status(400).json(errors);
 				}
 				// Create the profile
-				new Profile(profileFields).save()
-					.then(profile => res.json(profile))
-					.catch(err => res.status(400).json(err));
-			}).catch(err =>  res.status(400).json(err));
+				new Profile(profileFields).save().then((profile) => {
+					console.log(`user ${profile.handle} created`); // FIXME:
+					res.json(profile);
+				});
+			});
 		}
-	}).catch((err) => res.status(400).json(err));
+	});
+});
 
+// @route   GET api/profile/handle/:handle
+// @desc    Get profile by handle
+// @access  Public
+router.get('/handle/:handle', (req, res) => {
+	errors = {};
+	Profile.findOne({ handle: req.params.handle })
+		.populate('user', [ 'name', 'avatar' ])
+		.then((profile) => {
+			if (!profile) {
+				errors.noprofile = 'There is no profile for this user';
+				res.status(404).json(errors);
+			}
+			res.json(profile);
+		})
+		.catch((err) => res.status(404).json(err));
+});
+
+// @route   GET api/profile/user/:user_id
+// @desc    Get profile by user id
+// @access  Public
+router.get('/user/:user_id', (req, res) => {
+	errors = {};
+	Profile.findOne({ _id: req.params.user_id })
+		.populate('user', [ 'name', 'avatar' ])
+		.then((profile) => {
+			if (!profile) {
+				errors.noprofile = 'There is no profile for this user';
+				res.status(404).json(errors);
+			}
+
+			res.json(profile);
+		})
+		.catch((err) => res.status(404).json({ error: 'there is no profile for this user.' }));
+});
+
+// @route   GET api/profile/all
+// @desc    Get all profiles
+// @access  Public
+router.get('/all', (req, res) => {
+	const errors = {};
+	Profile.find({})
+		.populate('user', [ 'name', 'avatar' ])
+		.then((profiles) => {
+			if (!profiles) {
+				errors.noprofiles = 'There are no profiles';
+				res.status(404).json(errrors);
+			}
+			res.json(profiles);
+		})
+		.catch((err) => res.status(400).json({ error: 'There are no profiles' }));
 });
 
 module.exports = router;
