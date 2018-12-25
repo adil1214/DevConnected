@@ -3,15 +3,20 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
+    "client-install": "cd client && yarn install",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "serverlocal": "export NODE_ENV=development || SET \"NODE_ENV=development\" && nodemon server.js"
+    "server-localdb": "export NODE_ENV=development || SET \"NODE_ENV=development\" && nodemon server.js",
+    "client": "cd client && yarn start",
+    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+    "dev-localdb": "concurrently \"yarn run client\" \"yarn run server-localdb\""
   },
   "author": "ADIL",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
     "express": "^4.16.4",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.4.0",
