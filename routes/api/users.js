@@ -56,7 +56,7 @@ router.post('/register', (req, res) => {
 	});
 });
 
-// @route   GET api/users/login
+// @route   POST api/users/login
 // @desc    Login user & returning token
 // @access  Public
 router.post('/login', (req, res) => {
@@ -71,7 +71,7 @@ router.post('/login', (req, res) => {
 	User.findOne({ email }).then((user) => {
 		if (!user) {
 			errors.email = 'user not found!';
-			res.status(404).json(errors);
+			return res.status(404).json(errors);
 		}
 
 		bcrypt.compare(password, user.password).then((isMatch) => {
