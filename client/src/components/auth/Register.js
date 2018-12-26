@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import propTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
 
-export default class Register extends Component {
+import { registerUser } from '../../actions/authActions';
+
+class Register extends Component {
 	constructor(props) {
 		super(props);
 		this.onChange = this.onChange.bind(this);
@@ -15,6 +19,13 @@ export default class Register extends Component {
 			password2: '',
 			errors: {}
 		};
+	}
+
+	componentWillReceiveProps(nextProps) {
+		// ! unsafe
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors });
+		}
 	}
 
 	onChange(e) {
@@ -31,10 +42,7 @@ export default class Register extends Component {
 			password2: this.state.password2
 		};
 
-		axios
-			.post('/api/users/register', newUser)
-			.then((res) => console.log(res.data))
-			.catch((err) => this.setState({ errors: err.response.data }));
+		this.props.registerUser(newUser, this.props.history);
 	}
 
 	render() {
@@ -59,9 +67,7 @@ export default class Register extends Component {
 											name="name"
 											onChange={this.onChange}
 										/>
-										{errors.name && (
-											<div className="invalid-feedback">{errors.name}</div>
-										)}
+										{errors.name && <div className="invalid-feedback">{errors.name}</div>}
 									</div>
 									<div className="form-group">
 										<input
@@ -74,9 +80,7 @@ export default class Register extends Component {
 											value={this.state.email}
 											onChange={this.onChange}
 										/>
-										{errors.email && (
-											<div className="invalid-feedback">{errors.email}</div>
-										)}
+										{errors.email && <div className="invalid-feedback">{errors.email}</div>}
 										<small className="form-text text-muted">
 											This site uses Gravatar so if you want a profile image, use a Gravatar email
 										</small>
@@ -92,9 +96,7 @@ export default class Register extends Component {
 											value={this.state.password}
 											onChange={this.onChange}
 										/>
-										{errors.password && (
-											<div className="invalid-feedback">{errors.password}</div>
-										)}
+										{errors.password && <div className="invalid-feedback">{errors.password}</div>}
 									</div>
 									<div className="form-group">
 										<input
@@ -107,9 +109,7 @@ export default class Register extends Component {
 											value={this.state.password2}
 											onChange={this.onChange}
 										/>
-										{errors.password2 && (
-											<div className="invalid-feedback">{errors.password2}</div>
-										)}
+										{errors.password2 && <div className="invalid-feedback">{errors.password2}</div>}
 									</div>
 									<input type="submit" className="btn btn-info btn-block mt-4" />
 								</form>
@@ -121,3 +121,17 @@ export default class Register extends Component {
 		);
 	}
 }
+
+Register.propTypes = {
+	registerUser: propTypes.func.isRequired,
+	auth: propTypes.object.isRequired,
+	errors: propTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+	errors: state.errors
+});
+
+// export default Register;
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));
