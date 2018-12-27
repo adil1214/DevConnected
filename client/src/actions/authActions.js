@@ -22,7 +22,7 @@ export const loginUser = (userData) => (dispatch) => {
 		.post('/api/users/login', userData)
 		.then((res) => {
 			// Save token to localstorage
-			const {token} = res.data;
+			const { token } = res.data;
 			localStorage.setItem('jwtToken', token);
 			setAuthToken(token);
 			const decoded = jwt_decode(token);
@@ -33,7 +33,7 @@ export const loginUser = (userData) => (dispatch) => {
 				type: GET_ERRORS,
 				payload: err.response.data
 			})
-	);
+		);
 };
 
 export const setCurrentUser = (decoded) => ({
@@ -41,8 +41,8 @@ export const setCurrentUser = (decoded) => ({
 	payload: decoded
 });
 
-export const logoutUser = () => dispatch => {
+export const logoutUser = () => (dispatch) => {
 	localStorage.removeItem('jwtToken');
 	setAuthToken(false);
-	dispatch(setCurrentUser({})); 
-}
+	dispatch(setCurrentUser({}));
+};
