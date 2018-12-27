@@ -8,8 +8,8 @@
     "server": "nodemon server.js --ignore client/",
     "server-localdb": "export NODE_ENV=development || SET \"NODE_ENV=development\" && yarn run server",
     "client": "cd client && yarn start",
-    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
-    "dev-localdb": "concurrently \"yarn run client\" \"yarn run server-localdb\""
+    "dev": "concurrently --names \"server,client\" \"yarn:server\" \"yarn:client\" --kill-others",
+    "dev-localdb": "concurrently --names \"server,client\" \"yarn:server-localdb\" \"yarn:client\" --kill-others"
   },
   "author": "ADIL",
   "license": "MIT",
