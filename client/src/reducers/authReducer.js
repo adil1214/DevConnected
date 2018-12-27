@@ -3,7 +3,7 @@ import { isEmpty } from '../utils/is-empty';
 
 const authReducerDefaultState = {
 	isAuthenticated: false,
-	users: {}
+	user: {}
 };
 
 export default (state = authReducerDefaultState, action) => {
