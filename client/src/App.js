@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 
 import setAuthToken from './utils/setAuthToken';
-import { setCurrentUser } from './actions/authActions';
+import { setCurrentUser, logoutUser } from './actions/authActions';
 import configureStore from './store/configureStore';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -17,10 +17,16 @@ import './App.css';
 const store1 = configureStore();
 
 if (localStorage.jwtToken) {
-	const token = localStorage.jwtToken
+	const token = localStorage.jwtToken;
 	setAuthToken(token);
 	const decoded = jwt_decode(token);
 	store1.dispatch(setCurrentUser(decoded));
+	const currentTime = Date.now() / 1000;
+	if (decoded.exp < currentTime) {
+		store1.dispatch(logoutUser());
+		// TODO: clear current profile
+		window.location.href = '/login';
+	}
 }
 
 class App extends Component {
