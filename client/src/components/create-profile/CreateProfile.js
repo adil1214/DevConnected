@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import TextFieldGroup from '../common/TextFieldGroup';
+import { createProfile } from '../../actions/profileActions';
 
 class CreateProfile extends Component {
 	constructor(props) {
@@ -31,13 +33,35 @@ class CreateProfile extends Component {
 		};
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors });
+		}
+	}
+
 	onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 
 	onSubmit(e) {
 		e.preventDefault();
-		console.log('Submit'); // FIXME:
+		const profileData = {
+			handle: this.state.handle,
+			company: this.state.company,
+			website: this.state.website,
+			location: this.state.location,
+			status: this.state.status,
+			skills: this.state.skills,
+			githubusername: this.state.githubusername,
+			bio: this.state.bio,
+			twitter: this.state.twitter,
+			facebook: this.state.facebook,
+			linkedin: this.state.linkedin,
+			youtube: this.state.youtube,
+			instagram: this.state.instagram
+		};
+
+		this.props.createProfile(profileData, this.props.history);
 	}
 
 	render() {
@@ -97,7 +121,7 @@ class CreateProfile extends Component {
 		}
 
 		const statusOptions = [
-			{ label: '*Select professional status', value: 0 },
+			{ label: '* Select professional status', value: 0 },
 			{ label: 'Developer', value: 'Developer' },
 			{ label: 'Junior Developer', value: 'Junior Developer' },
 			{ label: 'Senior Developer', value: 'Senior Developer' },
@@ -126,12 +150,11 @@ class CreateProfile extends Component {
 									info="A unique handle for your profile URL. (this cant be changed later)."
 								/>
 								<SelectListGroup
-									name="Status"
-									placeholder="Status"
+									name="status"
 									value={this.state.status}
 									onChange={this.onChange}
 									options={statusOptions}
-									errors={errors.status}
+									error={errors.status}
 									info="Current occupation."
 								/>
 								<TextFieldGroup
@@ -219,4 +242,4 @@ const mapStateToProps = (state) => ({
 	errors: state.errors
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, { createProfile })(withRouter(CreateProfile));
