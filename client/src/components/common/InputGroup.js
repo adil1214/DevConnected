@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // TODO: add react-fontawsome (fa barnds icons) to replace the cdn in the html
 
 const InputGroup = ({ name, placeholder, value, error, onChange, icon, type }) => {
@@ -26,13 +26,13 @@ const InputGroup = ({ name, placeholder, value, error, onChange, icon, type }) =
 };
 
 InputGroup.propTypes = {
-	name: propTypes.string.isRequired,
-	placeholder: propTypes.string,
-	value: propTypes.string.isRequired,
-	icon: propTypes.string,
-	type: propTypes.string,
-	error: propTypes.string,
-	onChange: propTypes.func.isRequired
+	name: PropTypes.string.isRequired,
+	placeholder: PropTypes.string,
+	value: PropTypes.string.isRequired,
+	icon: PropTypes.string,
+	type: PropTypes.string,
+	error: PropTypes.string,
+	onChange: PropTypes.func.isRequired
 };
 
 InputGroup.defaultProps = {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -233,8 +233,8 @@ class CreateProfile extends Component {
 }
 
 CreateProfile.propTypes = {
-	profile: propTypes.object.isRequired,
-	errors: propTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

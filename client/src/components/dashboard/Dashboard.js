@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -50,9 +50,9 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-	auth: propTypes.object.isRequired,
-	profile: propTypes.object.isRequired,
-	getCurrentProfile: propTypes.func.isRequired
+	auth: PropTypes.object.isRequired,
+	profile: PropTypes.object.isRequired,
+	getCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

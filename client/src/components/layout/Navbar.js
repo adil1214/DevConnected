@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { logoutUser } from '../../actions/authActions';
 import { clearCurrentProfile } from '../../actions/profileActions';
@@ -87,9 +87,9 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-	auth: propTypes.object.isRequired,
-	logoutUser: propTypes.func.isRequired,
-	clearCurrentProfile: propTypes.func.isRequired
+	auth: PropTypes.object.isRequired,
+	logoutUser: PropTypes.func.isRequired,
+	clearCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
