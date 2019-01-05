@@ -11,7 +11,7 @@ const Profile = require('../../models/Profile');
 const validatePostInput = require('../../validation/post');
 
 // @route   GET api/posts/test
-// @desc    Test posts route
+// @desc    Test posts 
 // @access  Public
 router.get('/test', (req, res) => {
 	res.json({ msg: 'Posts works.' });
@@ -41,7 +41,7 @@ router.get('/:id', (req, res) => {
 });
 
 // @route   POST api/posts/
-// @desc    Create a post route
+// @desc    Create a post
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 	const { errors, isValid } = validatePostInput(req.body);
@@ -102,7 +102,7 @@ router.post('/like/:id', passport.authenticate('jwt', { session: false }), (req,
 });
 
 // @route   POST api/posts/unlike/:id
-// @desc    Unlike a post by id
+// @desc    Unlike a post by post id
 // @access  Private
 router.post('/unlike/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
 	Profile.findOne({ user: req.user.id }).then((profile) => {
@@ -145,33 +145,8 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
 	});
 });
 
-// @route   POST api/posts/comment/:id
-// @desc    Add a comment to a post
-// @access  Private
-router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const { errors, isValid } = validatePostInput(req.body);
-	if (!isValid) {
-		return res.status(400).json(errors);
-	}
-
-	Post.findById(req.params.id).then((post) => {
-		const newComment = {
-			user: req.user.id,
-			text: req.body.text,
-			name: req.user.name,
-			avatar: req.user.avatar
-		};
-
-		post.comments.unshift(newComment);
-		post
-			.save()
-			.then((post) => res.json(post))
-			.catch((err) => res.status(404).json({ postnotfound: 'No post found' }));
-	});
-});
-
 // @route   DELETE api/posts/comment/:id/:comment_id
-// @desc    Remove a comment from a post
+// @desc    Remove a comment from a post using post id and comment id
 // @access  Private
 router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session: false }), (req, res) => {
 	Post.findById(req.params.id).then((post) => {
