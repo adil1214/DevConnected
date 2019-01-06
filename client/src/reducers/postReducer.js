@@ -1,4 +1,4 @@
-import { POST_LOADING, ADD_POST, GET_POSTS } from '../actions/types';
+import { POST_LOADING, ADD_POST, GET_POSTS, DELETE_POST } from '../actions/types';
 
 const postReducerDefaultState = {
 	posts: [],
@@ -23,6 +23,11 @@ export default (state = postReducerDefaultState, action) => {
 				...state,
 				posts: action.payload,
 				loading: false
+			};
+		case DELETE_POST:
+			return {
+				...state,
+				posts: state.posts.filter((post) => post._id !== action.payload)
 			};
 		default:
 			return state;
