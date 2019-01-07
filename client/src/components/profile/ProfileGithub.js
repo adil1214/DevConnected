@@ -21,7 +21,7 @@ class ProfileGithub extends Component {
 		this._isMounted = true;
 		const { username } = this.props;
 		fetch(
-			`https:api.github.com/users/${username}/repos?per_page=${this.state.count}&sort=${this.state
+			`https://api.github.com/users/${username}/repos?per_page=${this.state.count}&sort=${this.state
 				.sort}&client_id=${this.state.clientId}&client_secret=${this.state.clientSecret}`
 		)
 			.then((res) => res.json())
