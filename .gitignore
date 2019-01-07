@@ -61,7 +61,4 @@ typings/
 .vscode/
 
 # config files
-config/
-
-# playground folder
-playground/
+config/config.json
