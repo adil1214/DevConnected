@@ -6,10 +6,9 @@
     "client-install": "cd client && yarn install",
     "start": "node server.js",
     "server": "nodemon server.js --ignore client/",
-    "server-localdb": "export NODE_ENV=development || SET \"NODE_ENV=development\" && yarn run server",
     "client": "cd client && yarn start",
     "dev": "concurrently -n \"server,client\" -p \"[{name}] [{time}]\" -t \"HH:mm:ss\" \"yarn:server\" \"yarn:client\" --kill-others",
-    "dev-localdb": "concurrently -n \"server,client\" -p \"[{name}] [{time}]\" -t \"HH:mm:ss\" \"yarn:server-localdb\" \"yarn:client\" --kill-others"
+    "heroku-postbuild": "cd client && yarn && yarn run build"
   },
   "author": "ADIL",
   "license": "MIT",
