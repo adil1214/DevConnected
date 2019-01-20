@@ -24,7 +24,6 @@ class ProfileHeader extends Component {
 								</p>
 								{isEmpty(profile.location) ? null : <p>{profile.location}</p>}
 								<p>
-									{/* TODO: fix link redirection */}
 									{isEmpty(profile.website) ? null : (
 										<a className="text-white p-2" href={profile.website} target="_blank" rel="noopener noreferrer">
 											<i className="fas fa-globe fa-2x" />

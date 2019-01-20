@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
+const normalizeUrl = require('normalize-url');
 
 // Models
 const Profile = require('../../models/Profile');
@@ -58,15 +59,16 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 	if (req.body.githubusername) profileFields.githubusername = req.body.githubusername;
 
 	if (typeof req.body.skills !== 'undefined') {
-		profileFields.skills = req.body.skills.split(',').filter(val => val).map(val => val.trim());
+		profileFields.skills = req.body.skills.split(',').filter((val) => val).map((val) => val.trim());
 	}
 
+	const normalizeUrlOptions = { forceHttps: true };
 	profileFields.social = {};
-	if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-	if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
-	if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
-	if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-	if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
+	if (req.body.youtube) profileFields.social.youtube = normalizeUrl(req.body.youtube, normalizeUrlOptions);
+	if (req.body.twitter) profileFields.social.twitter = normalizeUrl(req.body.twitter, normalizeUrlOptions);
+	if (req.body.facebook) profileFields.social.facebook = normalizeUrl(req.body.facebook, normalizeUrlOptions);
+	if (req.body.linkedin) profileFields.social.linkedin = normalizeUrl(req.body.linkedin, normalizeUrlOptions);
+	if (req.body.instagram) profileFields.social.instagram = normalizeUrl(req.body.instagram, normalizeUrlOptions);
 	//#endregion
 
 	Profile.findOne({ user: req.user.id }).then((profile) => {
