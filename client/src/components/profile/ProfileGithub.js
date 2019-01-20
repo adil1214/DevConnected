@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import config from '../../config/config';
+import axios from 'axios';
 
 class ProfileGithub extends Component {
 	constructor(props) {
@@ -15,22 +16,36 @@ class ProfileGithub extends Component {
 		};
 	}
 
-	_isMounted = false;		// workaround (updating the state when the component is unmounted is a no-op)
+	_isMounted = false; // workaround (updating the state when the component is unmounted is a "no-op")
 
 	componentDidMount() {
 		this._isMounted = true;
 		const { username } = this.props;
-		fetch(
-			`https://api.github.com/users/${username}/repos?per_page=${this.state.count}&sort=${this.state
-				.sort}&client_id=${this.state.clientId}&client_secret=${this.state.clientSecret}`
-		)
-			.then((res) => res.json())
-			.then((data) => {
+
+		const instance = axios.create({
+			headers: {
+				common: {
+					'Authorization': null
+				}
+			}
+		});
+		// FIXME: this request should be server to server to protect creds...
+		instance
+			.get(
+				`https://api.github.com/users/${username}/repos?per_page=${this.state.count}&sort=${this.state
+					.sort}&client_id=${this.state.clientId}&client_secret=${this.state.clientSecret}`
+			)
+			.then(({ data }) => {
 				if (this._isMounted) {
 					this.setState((prevState, props) => ({ repos: data }));
 				}
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				if (this._isMounted) {
+					this.setState(() => ({ repos: [] }));
+				}
+				// console.log(err.response);
+			});
 	}
 
 	componentWillUnmount() {
