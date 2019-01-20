@@ -58,7 +58,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 	if (req.body.githubusername) profileFields.githubusername = req.body.githubusername;
 
 	if (typeof req.body.skills !== 'undefined') {
-		profileFields.skills = req.body.skills.split(',');
+		profileFields.skills = req.body.skills.split(',').filter(val => val).map(val => val.trim());
 	}
 
 	profileFields.social = {};

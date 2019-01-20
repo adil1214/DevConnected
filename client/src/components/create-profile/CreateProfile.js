@@ -44,7 +44,6 @@ class CreateProfile extends Component {
 	}
 
 	onSubmit(e) {
-		// TODO sanitize skills input either here or on the backend
 		e.preventDefault();
 		const profileData = {
 			handle: this.state.handle,

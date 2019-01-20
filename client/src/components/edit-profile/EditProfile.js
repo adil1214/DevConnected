@@ -45,7 +45,7 @@ class CreateProfile extends Component {
 
 		if (nextProps.profile.profile) {
 			const profile = nextProps.profile.profile;
-			const skillsCSV = profile.skills.join(',');
+			const skillsCSV = profile.skills.join(', ');
 
 			profile.company = !isEmpty(profile.company) ? profile.company : '';
 			profile.website = !isEmpty(profile.website) ? profile.website : '';
