@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
+const RateLimit = require('express-rate-limit');
+const MongoStore = require('rate-limit-mongo');
 
 const users = require('./routes/api/users');
 const posts = require('./routes/api/posts');
@@ -17,7 +19,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // DB config
-// const db = require('./config/keys').MONGODB_URI;
 const db = process.env.MONGODB_URI;
 
 // Connect to mongoDB
@@ -33,6 +34,20 @@ app.use(passport.initialize());
 
 // Passport Config
 require('./config/passport')(passport);
+
+// Rate limiter
+app.enable('trust proxy');
+
+let limiter = new RateLimit({
+	store: new MongoStore({
+		uri: db
+	}),
+	max: 450,
+	windowMs: 15 * 60 * 1000
+});		// 450 requests every 15mins 
+
+// TODO: handle 429 error on the frontend
+app.use(limiter);
 
 // Use Routes
 app.use('/api/users', users);
