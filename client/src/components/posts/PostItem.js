@@ -34,7 +34,8 @@ class PostItem extends Component {
 				<div className="row">
 					<div className="col-md-2">
 						{/* FIXME: i need the user handle to link his profile from from image ?! */}
-						<Link to={`/profile/${'fixme'}`}>
+						<Link to={`/profile/id/${post.user}`}>
+							{/* FIXME: post.id is the user id not the profile.id ....... */}
 							<img className="rounded-circle d-none d-md-block" src={post.avatar} alt="" />
 						</Link>
 						<br />
