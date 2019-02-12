@@ -4,12 +4,23 @@ img {
 
 .landing {
   position: relative;
-  background: url('./img/showcase.jpg') no-repeat;
+  /* background: url('./img/2.jpg') no-repeat; */
   background-size: cover;
   background-position: center;
   height: 100vh;
   margin-top: -24px;
   margin-bottom: -50px;
+  transform: translateZ(0);
+  animation: myanimation 15s infinite;          /* IE 10+, Fx 29+ */
+  -webkit-animation: myanimation 15s infinite;  /* Safari 4+ */
+  -moz-animation: myanimation 15s infinite;     /* Fx 5+ */
+  -o-animation: myanimation 15s infinite;       /* Opera 12+ */
+}
+
+@keyframes myanimation {
+  0%, 100% {background-image: url('./img/2.jpg');}
+  33%{background-image: url('./img/3.jpg');}
+  66%{background-image: url('./img/1.jpg');}
 }
 
 .landing-inner {
