@@ -111,11 +111,11 @@ router.get('/handle/:handle', (req, res) => {
 });
 
 // @route   GET api/profile/id/:id
-// @desc    Get profile by id
+// @desc    Get profile by id (user id)
 // @access  Public
-router.get('/id/:id', (req, res) => {
+router.get('/userid/:id', (req, res) => {
 	errors = {};
-	Profile.findOne({ _id: req.params.id })
+	Profile.findOne({ user: req.params.id })
 		.populate('user', [ 'name', 'avatar' ])
 		.then((profile) => {
 			if (!profile) {

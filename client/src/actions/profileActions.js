@@ -44,10 +44,10 @@ export const getProfileByHandle = (handle) => (dispatch) => {
 		);
 };
 
-export const getProfileById = (id) => (dispatch) => {
+export const getProfileByUserId = (id) => (dispatch) => {
 	dispatch(setProfileLoading());
 	axios
-		.get(`/api/profile/id/${id}`)
+		.get(`/api/profile/userid/${id}`)
 		.then((res) =>
 			dispatch({
 				type: GET_PROFILE,
