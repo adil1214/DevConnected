@@ -8,7 +8,9 @@
     "server": "nodemon server.js --ignore client/",
     "client": "cd client && yarn start",
     "dev": "concurrently -n \"server,client\" -p \"[{name}] [{time}]\" -t \"HH:mm:ss\" \"yarn:server\" \"yarn:client\" --kill-others",
-    "heroku-postbuild": "cd client && yarn && yarn run build"
+    "heroku-postbuild": "cd client && yarn && yarn run build",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "engines": {
     "node": "10.13.0",
@@ -29,9 +31,11 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "rate-limit-mongo": "^1.0.3",
-    "validator": "^10.9.0"
+    "validator": "^10.9.0",
+    "snyk": "^1.258.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.8"
-  }
+  },
+  "snyk": true
 }
