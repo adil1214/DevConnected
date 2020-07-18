@@ -22,7 +22,7 @@
     "concurrently": "^4.1.0",
     "express": "^4.16.4",
     "express-rate-limit": "^3.3.2",
-    "gravatar": "^1.8.0",
+    "gravatar": "^1.8.1",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.3.16",
     "normalize-url": "^4.1.0",
