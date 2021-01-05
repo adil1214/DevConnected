@@ -2,7 +2,7 @@ import { GET_ERRORS, CLEAR_ERRORS } from '../actions/types';
 
 const errorReducerDefaultState = {};
 
-export default (state = errorReducerDefaultState, action) => {
+const errorReducer = (state = errorReducerDefaultState, action) => {
 	switch (action.type) {
 		case GET_ERRORS:
 			return action.payload;
@@ -12,3 +12,5 @@ export default (state = errorReducerDefaultState, action) => {
 			return state;
 	}
 };
+
+export default errorReducer;

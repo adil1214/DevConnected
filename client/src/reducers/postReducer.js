@@ -1,4 +1,10 @@
-import { POST_LOADING, ADD_POST, GET_POSTS, DELETE_POST, GET_POST } from '../actions/types';
+import {
+	POST_LOADING,
+	ADD_POST,
+	GET_POSTS,
+	DELETE_POST,
+	GET_POST
+} from '../actions/types';
 
 const postReducerDefaultState = {
 	posts: [],
@@ -6,12 +12,12 @@ const postReducerDefaultState = {
 	loading: false
 };
 
-export default (state = postReducerDefaultState, action) => {
+const postReducer = (state = postReducerDefaultState, action) => {
 	switch (action.type) {
 		case ADD_POST:
 			return {
 				...state,
-				posts: [ action.payload, ...state.posts ]
+				posts: [action.payload, ...state.posts]
 			};
 		case POST_LOADING:
 			return {
@@ -39,3 +45,5 @@ export default (state = postReducerDefaultState, action) => {
 			return state;
 	}
 };
+
+export default postReducer;

@@ -6,7 +6,7 @@ const profileReducerDefaultState = {
 	loading: false
 };
 
-export default (state = profileReducerDefaultState, action) => {
+const profileReducer = (state = profileReducerDefaultState, action) => {
 	switch (action.type) {
 		case PROFILE_LOADING:
 			return {
@@ -38,3 +38,5 @@ export default (state = profileReducerDefaultState, action) => {
 			return state;
 	}
 };
+
+export default profileReducer;
