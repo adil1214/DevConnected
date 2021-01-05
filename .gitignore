@@ -62,3 +62,7 @@ typings/
 
 # config files
 config/config.json
+
+# seed data
+/_data
+seeder.js
