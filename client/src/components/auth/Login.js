@@ -24,10 +24,10 @@ class Login extends Component {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		// ! unsafe
+  // todo: move the effect somewhere else
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		if (nextProps.auth.isAuthenticated) {
-			this.props.history.push('/dashboard');
+			this.props.history.push('/dashboard'); // !the effect
 		}
 
 		if (nextProps.errors) {

@@ -16,11 +16,12 @@ class PostForm extends Component {
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 
-	componentWillReceiveProps(newProps) {
-		if (newProps.errors) {
-			this.setState({ errors: newProps.errors });
+	static getDerivedStateFromProps(nextProps, prevState){
+		if (nextProps.errors) {
+			return {errors: nextProps.errors}
 		}
-	}
+		return null;
+  }
 
 	onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });

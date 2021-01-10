@@ -26,13 +26,13 @@ class Register extends Component {
 			this.props.history.push('/dashboard');
 		}
 	}
-
-	componentWillReceiveProps(nextProps) {
-		// ! unsafe
+  
+  static getDerivedStateFromProps(nextProps, prevState){
 		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
+			return {errors: nextProps.errors}
 		}
-	}
+		return null;
+  }
 
 	onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });

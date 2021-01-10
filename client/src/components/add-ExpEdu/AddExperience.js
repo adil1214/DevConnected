@@ -26,12 +26,13 @@ class AddExperience extends Component {
 			disabled: false
 		};
 	}
-
-	componentWillReceiveProps(nextProps) {
+  
+  static getDerivedStateFromProps(nextProps, prevState){
 		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
+			return {errors: nextProps.errors}
 		}
-	}
+		return null;
+  }
 
 	onChange(e) {
 		this.setState({ [e.target.name]: e.target.value });
