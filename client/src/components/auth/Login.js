@@ -24,15 +24,15 @@ class Login extends Component {
 		}
 	}
 
-  // todo: move the effect somewhere else
-	UNSAFE_componentWillReceiveProps(nextProps) {
+	static getDerivedStateFromProps(nextProps, prevState){
 		if (nextProps.auth.isAuthenticated) {
-			this.props.history.push('/dashboard'); // !the effect
+			nextProps.history.push('/dashboard');
 		}
 
 		if (nextProps.errors) {
-			this.setState({ errors: nextProps.errors });
-		}
+			return { errors: nextProps.errors };
+    }
+    return null;
 	}
 
 	onChange(e) {
