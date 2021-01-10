@@ -6,7 +6,7 @@ import { deleteEducation } from '../../actions/profileActions';
 
 class Education extends Component {
 	onDeleteClick(id) {
-		this.props.deleteExperience(id);
+		this.props.deleteEducation(id);
 	}
 
 	render() {
