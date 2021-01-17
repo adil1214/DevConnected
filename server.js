@@ -7,6 +7,7 @@ const passport = require('passport');
 const path = require('path');
 const RateLimit = require('express-rate-limit');
 const MongoStore = require('rate-limit-mongo');
+const morgan = require('morgan');
 
 const users = require('./routes/api/users');
 const posts = require('./routes/api/posts');
@@ -15,6 +16,7 @@ const profile = require('./routes/api/profile');
 const app = express();
 const port = process.env.PORT;
 
+app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
