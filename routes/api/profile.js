@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 const normalizeUrl = require('normalize-url');
+const axios = require('axios');
 
 // Models
 const Profile = require('../../models/Profile');
@@ -253,6 +254,37 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
 			res.json({ success: true });
 		});
 	});
+	}
+);
+
+// @route    api/profile/github/:username
+// @desc    get github user repos
+// @access  Private
+router.get('/github/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	try {
+		const response = await axios.get(
+			`https://api.github.com/users/${req.params.username}/repos`,
+			{
+				params: {
+          ...req.query
+				},
+				auth: {
+					username: process.env.githubClientId,
+					password: process.env.githubclientSecret
+				}
+			}
+    );
+    
+    const data = await response.data;
+    
+		// const ownedRepos = data.filter(({ fork }) => !fork);
+    // res.json({ length: ownedRepos.length, ownedRepos });
+    
+		res.json(data);
+	} catch (error) {
+    console.log(error)
+		res.status(400).json("check server log");
+	}
 });
 
 module.exports = router;

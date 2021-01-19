@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import config from '../../config/config';
 import axios from 'axios';
 
 class ProfileGithub extends Component {
@@ -8,10 +7,9 @@ class ProfileGithub extends Component {
 		super(props);
 
 		this.state = {
-			clientId: config.ClientId,
-			clientSecret: config.clientSecret,
-			count: 5,
-			sort: 'created: asc',
+			sort: 'updated',
+			type: 'owner',
+			count: 7,
 			repos: []
 		};
 	}
@@ -22,18 +20,10 @@ class ProfileGithub extends Component {
 		this._isMounted = true;
 		const { username } = this.props;
 
-		const instance = axios.create({
-			headers: {
-				common: {
-					'Authorization': null
-				}
-			}
-		});
-		// FIXME: this request should be server to server to protect creds...
-		instance
+		axios
 			.get(
-				`https://api.github.com/users/${username}/repos?per_page=${this.state.count}&sort=${this.state
-					.sort}&client_id=${this.state.clientId}&client_secret=${this.state.clientSecret}`
+				`http://localhost:5000/api/profile/github/${username}?per_page=${this
+					.state.count}&sort=${this.state.sort}&type=${this.state.type}`
 			)
 			.then(({ data }) => {
 				if (this._isMounted) {
@@ -67,9 +57,15 @@ class ProfileGithub extends Component {
 							</h4>
 						</div>
 						<div className="col-md-6">
-							<span className="badge badge-info mr-1">Stars: {repo.stargazers_count}</span>
-							<span className="badge badge-secondary mr-1">Watchers: {repo.watchers_count}</span>
-							<span className="badge badge-info mr-1">Forks: {repo.forks_count}</span>
+							<span className="badge badge-info mr-1">
+								Stars: {repo.stargazers_count}
+							</span>
+							<span className="badge badge-secondary mr-1">
+								Watchers: {repo.watchers_count}
+							</span>
+							<span className="badge badge-info mr-1">
+								Forks: {repo.forks_count}
+							</span>
 						</div>
 					</div>
 				</div>
