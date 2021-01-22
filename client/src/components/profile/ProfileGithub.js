@@ -22,8 +22,8 @@ class ProfileGithub extends Component {
 
 		axios
 			.get(
-				`http://localhost:5000/api/profile/github/${username}?per_page=${this
-					.state.count}&sort=${this.state.sort}&type=${this.state.type}`
+				`/api/profile/github/${username}?per_page=${this.state
+					.count}&sort=${this.state.sort}&type=${this.state.type}`
 			)
 			.then(({ data }) => {
 				if (this._isMounted) {
@@ -34,7 +34,6 @@ class ProfileGithub extends Component {
 				if (this._isMounted) {
 					this.setState(() => ({ repos: [] }));
 				}
-				// console.log(err.response);
 			});
 	}
 
@@ -76,7 +75,11 @@ class ProfileGithub extends Component {
 			<div>
 				<hr />
 				<h3 className="mb-4">Latest Github Items</h3>
-				{repoItems}
+				{repos.length ? (
+					repoItems
+				) : (
+					'Either the specified github username doesnt exist or it has no repos.'
+				)}
 			</div>
 		);
 	}
