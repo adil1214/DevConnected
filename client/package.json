@@ -7,7 +7,7 @@
     "classnames": "^2.2.6",
     "jwt-decode": "^3.1.2",
     "moment": "^2.23.0",
-    "mongoose": "^5.11.11",
+    "mongoose": "^6.4.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-moment": "^1.1.1",
